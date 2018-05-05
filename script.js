@@ -39,6 +39,7 @@ window.onload = function() {
     ctx.fillStyle = "green";
     ctx.fill();
   };
+
   //Defining the player move options
   Player.prototype.move = function(clickedKey) {
     // console.log(this.x);
@@ -62,21 +63,42 @@ window.onload = function() {
         break;
       default:
         console.log("You're pressing the wrong button");
+      //ISSUE NOT WORKING FOR DIAGONALLS ----------
+      case 37 && 38:
+        console.log("left+up");
+        this.x -= 10;
+        this.y -= 10;
+        break;
+      case 39 && 38:
+        console.log("right+up");
+        this.x += 10;
+        this.y -= 10;
+        break;
+      case 37 && 40:
+        console.log("left+down");
+        this.x -= 10;
+        this.y += 10;
+        break;
+      case 30 && 40:
+        console.log("left+down");
+        this.x += 10;
+        this.y += 10;
+        break;
     }
     this.drawPlayer();
   };
 
-  var Obstacle = function() {
-    this.x = 100;
-    this.y = 100;
-    this.r = 50;
+  var Obstacle = function(x, y, r, startAngle, endAngle, boolean) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
     this.startAngle = 0;
     this.endAngle = 2 * Math.PI;
     //   clockwise: anti - clockwise,
     this.boolean = true;
   };
 
-  Obstacle.prototype.drawObstacle = function() {
+  Obstacle.prototype.createObstacle = function() {
     console.log("hey: ", this);
     ctx.beginPath();
     ctx.arc(
@@ -90,6 +112,16 @@ window.onload = function() {
     );
     ctx.fillStyle = "red";
     ctx.fill();
+    // obstacles.push(
+    //   Obstacle(
+    //     this.x,
+    //     this.y,
+    //     this.r,
+    //     this.startAngle,
+    //     this.endAngle,
+    //     this.boolean
+    //   )
+    // );
   };
 
   function startGame() {
@@ -98,7 +130,6 @@ window.onload = function() {
     currentPlayer = new Player();
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
-
     // currentGame.update()
   }
 
