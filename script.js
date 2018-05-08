@@ -7,7 +7,9 @@ window.onload = function() {
   var ctx = canvas.getContext("2d");
 
   var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-  var randomcolor = color.length;
+  var randomColor = color[Math.floor(Math.random() * color.length)];
+  console.log(randomColor);
+  var playerColor = color[3];
 
   // game constructor function
   var Game = function() {
@@ -39,7 +41,7 @@ window.onload = function() {
       // this.clockwise,
       this.boolean
     );
-    ctx.fillStyle = "green";
+    ctx.fillStyle = playerColor;
     ctx.fill();
   };
 
@@ -118,7 +120,7 @@ window.onload = function() {
       // this.clockwise,
       this.boolean
     );
-    ctx.fillStyle = "red";
+    ctx.fillStyle = randomColor;
     ctx.fill();
   };
 
