@@ -6,6 +6,9 @@ window.onload = function() {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 
+  var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+  var randomcolor = color.length;
+
   // game constructor function
   var Game = function() {
     console.log("this: " + this);
@@ -39,6 +42,8 @@ window.onload = function() {
     ctx.fillStyle = "green";
     ctx.fill();
   };
+
+  // function diagLeftUp (clickedKey) = if (clickedKey == 83 && clickedKey == 38) {return
 
   //Defining the player move options
   Player.prototype.move = function(clickedKey) {
@@ -91,31 +96,18 @@ window.onload = function() {
   };
   // Obstacle constructor function
   var Obstacle = function(x, y, r, startAngle, endAngle, boolean) {
-    this.x = x;
-    this.y = y;
-    this.r = r;
-    this.startAngle = 0;
+    (this.x = Math.floor(Math.random() * 500)),
+      (this.y = Math.floor(Math.random() * 500)),
+      (this.r = 3 + Math.floor(Math.random() * 100)),
+      (this.startAngle = 0);
     this.endAngle = 2 * Math.PI;
     //   clockwise: anti - clockwise,
     this.boolean = true;
   };
 
   //create Obstacles function
-  Obstacle.prototype.createObstacle = function() {
-    // console.log("hey: ", this);
-    ctx.beginPath();
-    ctx.arc(
-      (this.x = Math.floor(Math.random() * 500)),
-      (this.y = Math.floor(Math.random() * 500)),
-      (this.r = 3 + Math.floor(Math.random() * 100)),
-      this.startAngle,
-      this.endAngle,
-      // this.clockwise,
-      this.boolean
-    );
-  };
 
-  Obstacle.prototype.drawObstacles = function() {
+  Obstacle.prototype.drawObstacle = function() {
     ctx.beginPath();
     ctx.arc(
       this.x,
@@ -137,9 +129,14 @@ window.onload = function() {
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
 
+    // CREATES A RANDOM OBSTACLE IF I WRITE LIKE THIS
+    currentObstacle = new Obstacle();
+    currentGame.obstacles = currentObstacle;
+    currentGame.obstacles.drawObstacle();
+
     //creating new Obstackes
     // currentGame.obstacles.push(
-    //   new Obstacle((x, y, r, startAngle, endAngle, boolean))
+    //   new Obstacle(x, y, r, startAngle, endAngle, boolean);
     // );
 
     // currentGame.update();
