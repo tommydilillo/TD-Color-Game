@@ -6,18 +6,35 @@ window.onload = function() {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 
+  //setting the standard color
   var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
   var randomColor = color[Math.floor(Math.random() * color.length)];
-  console.log(randomColor);
   var playerColor = color[3];
+  //   var obstacleColor = randomColor.splice(playerColor);
+  console.log(playerColor);
 
   // game constructor function
   var Game = function() {
     console.log("this: " + this);
-    this.player = {};
+    this.player = {}; // player => Object
+    this.obstacle = {};
     this.obstacles = [];
+    this.numberOfObstacles = this.obstacles.length;
+    for (
+      var numberOfObstacles = 0;
+      numberOfObstacles < 10;
+      numberOfObstacles++
+    ) {
+      currentObstacle = new Obstacle();
+      this.obstacles.push(currentObstacle);
+      //   this.obstacles = currentObstacle;
+      currentObstacle.drawObstacle();
+    }
   };
 
+  Game.prototype.drawGame = function() {
+    this.player.drawPlayer();
+  };
   // Player constructor functiom
   var Player = function() {
     this.x = 100;
@@ -45,39 +62,37 @@ window.onload = function() {
     ctx.fill();
   };
 
-  // function diagLeftUp (clickedKey) = if (clickedKey == 83 && clickedKey == 38) {return
-
   //Defining the player move options
-  Player.prototype.move = function(clickedKey) {
+
+  Player.prototype.movePlayer = function(clickedKey) {
     // console.log(this.x);
-    ctx.clearRect(0 - this.r, 0 - this.r, this.r * 2, this.r * 2); // NEED TO ACCESS this.x, etc.
+    ctx.clearRect(0, 0, 500, 500); // NEED TO ACCESS this.x, etc.
     switch (clickedKey) {
       //ISSUE NOT WORKING FOR DIAGONALLS ----------
-      case 37 && 38:
-        console.log("left & up");
-        this.x -= 10;
-        this.y -= 10;
-        break;
+      // case 37 && 38:
+      //   console.log("left & up");
+      //   this.x -= 10;
+      //   this.y -= 10;
+      //   break;
+      // case 39 && 38:
+      //   console.log("right & up");
+      //   this.x += 10;
+      //   this.y -= 10;
+      //   break;
+      // case 37 && 40:
+      //   console.log("left & down");
+      //   this.x -= 10;
+      //   this.y += 10;
+      //   break;
+      // case 39 && 40:
+      //   console.log("left & down");
+      //   this.x += 10;
+      //   this.y += 10;
+      //   break;
       case 37:
         console.log("left");
         this.x -= 10;
         break;
-      case 39 && 38:
-        console.log("right & up");
-        this.x += 10;
-        this.y -= 10;
-        break;
-      case 37 && 40:
-        console.log("left & down");
-        this.x -= 10;
-        this.y += 10;
-        break;
-      case 39 && 40:
-        console.log("left & down");
-        this.x += 10;
-        this.y += 10;
-        break;
-
       case 38:
         console.log("up");
         this.y -= 10;
@@ -97,29 +112,21 @@ window.onload = function() {
     this.drawPlayer();
   };
   // Obstacle constructor function
-  var Obstacle = function(x, y, r, startAngle, endAngle, boolean) {
-    (this.x = Math.floor(Math.random() * 500)),
-      (this.y = Math.floor(Math.random() * 500)),
-      (this.r = 3 + Math.floor(Math.random() * 100)),
-      (this.startAngle = 0);
-    this.endAngle = 2 * Math.PI;
+  var Obstacle = function() {
+    this.x = Math.floor(Math.random() * 500);
+    this.y = Math.floor(Math.random() * 500);
+    this.r = 3 + Math.floor(Math.random() * 100);
+    //   this.startAngle = 0);
+    //   this.endAngle = 2 * Math.PI;
     //   clockwise: anti - clockwise,
-    this.boolean = true;
+    //   this.boolean = true;
   };
 
   //create Obstacles function
 
   Obstacle.prototype.drawObstacle = function() {
     ctx.beginPath();
-    ctx.arc(
-      this.x,
-      this.y,
-      this.r,
-      this.startAngle,
-      this.endAngle,
-      // this.clockwise,
-      this.boolean
-    );
+    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
     ctx.fillStyle = randomColor;
     ctx.fill();
   };
@@ -133,15 +140,18 @@ window.onload = function() {
 
     // CREATES A RANDOM OBSTACLE IF I WRITE LIKE THIS
     currentObstacle = new Obstacle();
-    currentGame.obstacles = currentObstacle;
-    currentGame.obstacles.drawObstacle();
+    currentGame.obstacles.push(currentObstacle);
+    //currentGame.obstacles = currentObstacle;
+    currentObstacle.drawObstacle();
 
-    //creating new Obstackes
-    // currentGame.obstacles.push(
-    //   new Obstacle(x, y, r, startAngle, endAngle, boolean);
-    // );
+    console.log("OBSTACLES ", currentGame.obstacles);
 
-    // currentGame.update();
+    currentObstacle2 = new Obstacle();
+    currentGame.obstacles.push(currentObstacle2);
+    //currentGame.obstacles = currentObstacle;
+    currentObstacle2.drawObstacle();
+
+    console.log("OBSTACLES ", currentGame.obstacles);
   }
   //CALL START GAME
   startGame();
@@ -149,7 +159,7 @@ window.onload = function() {
   document.onkeydown = function(e) {
     var clickedKey = e.keyCode;
     console.log(clickedKey);
-    currentGame.player.move(clickedKey);
+    currentGame.player.movePlayer(clickedKey);
   };
 
   //   Game.prototype.update = function() {
