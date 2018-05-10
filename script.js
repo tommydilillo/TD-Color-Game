@@ -6,17 +6,20 @@ window.onload = function() {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 
-  //setting the standard color
+  //defining colors
   var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
   var randomColor = color[Math.floor(Math.random() * color.length)];
-  var obstacleColor = randomColor;
   var playerColor = color[3];
-  //   var obstacleColor = randomColor.splice(playerColor);
-  console.log(playerColor);
+  var obstacleColor = color.splice(playerColor);
+  console.log(
+    "player color: ",
+    playerColor,
+    "obstacle color array:",
+    obstacleColor
+  );
 
   // game constructor function
   var Game = function() {
-    console.log("this: " + this);
     this.player = {}; // player => Object
     this.obstacle = {}; // alan doesn't think needs to be under game.
     this.obstacles = [];
@@ -48,9 +51,9 @@ window.onload = function() {
     return null;
   };
 
+  // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
-    // console.log(this.x);
-    ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
+    ctx.clearRect(0, 0, 750, 500);
     switch (clickedKey) {
       case 37:
         console.log("left");
@@ -73,6 +76,13 @@ window.onload = function() {
         console.log("You're pressing the wrong button");
     }
     this.drawGame();
+  };
+
+  // OBSTACLE MOVEMENT
+  Game.prototype.moveObstacle = function() {
+    ctx.clearRect(0, 0, 750, 500);
+    this.obstacle.x += 5;
+    this.obstacle.y += 5;
   };
 
   // Player constructor functiom
@@ -105,35 +115,6 @@ window.onload = function() {
     ctx.fillText("p1", this.x, this.y);
   };
 
-  //Defining the player move options
-
-  // Player.prototype.movePlayer = function(clickedKey) {
-  //   // console.log(this.x);
-  //   ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
-  //   switch (clickedKey) {
-  //     case 37:
-  //       console.log("left");
-  //       this.x -= 10;
-  //       break;
-  //     case 38:
-  //       console.log("up");
-  //       this.y -= 10;
-  //       break;
-  //     case 39:
-  //       console.log("right");
-  //       this.x += 10;
-  //       break;
-  //     case 40:
-  //       console.log("down");
-  //       this.y += 10;
-  //       break;
-
-  //     default:
-  //       console.log("You're pressing the wrong button");
-  //   }
-  //   this.drawPlayer();
-  // };
-  // Obstacle constructor function
   var Obstacle = function() {
     this.x = Math.floor(Math.random() * 750);
     this.y = Math.floor(Math.random() * 500);
@@ -148,25 +129,11 @@ window.onload = function() {
       "violet"
     ];
     let randomColor = color[Math.floor(Math.random() * color.length)];
-    //   this.startAngle = 0);
-    //   this.endAngle = 2 * Math.PI;
-    //   clockwise: anti - clockwise,
-    //   this.boolean = true;
     this.color = randomColor;
   };
 
   //create Obstacles function
   Obstacle.prototype.drawObstacle = function() {
-    // let color = [
-    //   "red",
-    //   "orange",
-    //   "yellow",
-    //   "green",
-    //   "blue",
-    //   "indigo",
-    //   "violet"
-    // ];
-    // let randomColor = color[Math.floor(Math.random() * color.length)];
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
     ctx.fillStyle = this.color;
@@ -206,12 +173,6 @@ window.onload = function() {
     currentPlayer = new Player();
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
-
-    // CREATES A RANDOM OBSTACLE IF I WRITE LIKE THIS
-    // currentObstacle = new Obstacle();
-    // currentGame.obstacles.push(currentObstacle);
-    // //currentGame.obstacles = currentObstacle;
-    // currentObstacle.drawObstacle();
 
     console.log("OBSTACLES ", currentGame.obstacles);
   }
