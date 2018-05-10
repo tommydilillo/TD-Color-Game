@@ -34,10 +34,45 @@ window.onload = function() {
 
   Game.prototype.drawGame = function() {
     this.player.drawPlayer();
+    this.numberOfObstacles = this.obstacles.length;
+    for (
+      var numberOfObstacles = 0;
+      numberOfObstacles < 10;
+      numberOfObstacles++
+    ) {
+      this.obstacles[numberOfObstacles].drawObstacle();
+    }
   };
 
   Game.prototype.startGame = function() {
     return null;
+  };
+
+  Game.prototype.movePlayer = function(clickedKey) {
+    // console.log(this.x);
+    ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
+    switch (clickedKey) {
+      case 37:
+        console.log("left");
+        this.player.x -= 10;
+        break;
+      case 38:
+        console.log("up");
+        this.player.y -= 10;
+        break;
+      case 39:
+        console.log("right");
+        this.player.x += 10;
+        break;
+      case 40:
+        console.log("down");
+        this.player.y += 10;
+        break;
+
+      default:
+        console.log("You're pressing the wrong button");
+    }
+    this.drawGame();
   };
 
   // Player constructor functiom
@@ -72,45 +107,37 @@ window.onload = function() {
 
   //Defining the player move options
 
-  Player.prototype.movePlayer = function(clickedKey) {
-    // console.log(this.x);
-    ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
-    switch (clickedKey) {
-      case 37:
-        console.log("left");
-        this.x -= 10;
-        break;
-      case 38:
-        console.log("up");
-        this.y -= 10;
-        break;
-      case 39:
-        console.log("right");
-        this.x += 10;
-        break;
-      case 40:
-        console.log("down");
-        this.y += 10;
-        break;
+  // Player.prototype.movePlayer = function(clickedKey) {
+  //   // console.log(this.x);
+  //   ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
+  //   switch (clickedKey) {
+  //     case 37:
+  //       console.log("left");
+  //       this.x -= 10;
+  //       break;
+  //     case 38:
+  //       console.log("up");
+  //       this.y -= 10;
+  //       break;
+  //     case 39:
+  //       console.log("right");
+  //       this.x += 10;
+  //       break;
+  //     case 40:
+  //       console.log("down");
+  //       this.y += 10;
+  //       break;
 
-      default:
-        console.log("You're pressing the wrong button");
-    }
-    this.drawPlayer();
-  };
+  //     default:
+  //       console.log("You're pressing the wrong button");
+  //   }
+  //   this.drawPlayer();
+  // };
   // Obstacle constructor function
   var Obstacle = function() {
     this.x = Math.floor(Math.random() * 750);
     this.y = Math.floor(Math.random() * 500);
     this.r = 3 + Math.floor(Math.random() * 100);
-    //   this.startAngle = 0);
-    //   this.endAngle = 2 * Math.PI;
-    //   clockwise: anti - clockwise,
-    //   this.boolean = true;
-  };
-
-  //create Obstacles function
-  Obstacle.prototype.drawObstacle = function() {
     let color = [
       "red",
       "orange",
@@ -121,9 +148,28 @@ window.onload = function() {
       "violet"
     ];
     let randomColor = color[Math.floor(Math.random() * color.length)];
+    //   this.startAngle = 0);
+    //   this.endAngle = 2 * Math.PI;
+    //   clockwise: anti - clockwise,
+    //   this.boolean = true;
+    this.color = randomColor;
+  };
+
+  //create Obstacles function
+  Obstacle.prototype.drawObstacle = function() {
+    // let color = [
+    //   "red",
+    //   "orange",
+    //   "yellow",
+    //   "green",
+    //   "blue",
+    //   "indigo",
+    //   "violet"
+    // ];
+    // let randomColor = color[Math.floor(Math.random() * color.length)];
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
-    ctx.fillStyle = randomColor;
+    ctx.fillStyle = this.color;
     ctx.fill();
   };
 
@@ -175,7 +221,7 @@ window.onload = function() {
   document.onkeydown = function(e) {
     var clickedKey = e.keyCode;
     console.log(clickedKey);
-    currentGame.player.movePlayer(clickedKey);
+    currentGame.movePlayer(clickedKey);
   };
 
   Game.prototype.update = function() {
