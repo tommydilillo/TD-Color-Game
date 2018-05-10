@@ -9,6 +9,7 @@ window.onload = function() {
   //setting the standard color
   var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
   var randomColor = color[Math.floor(Math.random() * color.length)];
+  var obstacleColor = randomColor;
   var playerColor = color[3];
   //   var obstacleColor = randomColor.splice(playerColor);
   console.log(playerColor);
@@ -17,7 +18,7 @@ window.onload = function() {
   var Game = function() {
     console.log("this: " + this);
     this.player = {}; // player => Object
-    this.obstacle = {};
+    this.obstacle = {}; // alan doesn't think needs to be under game.
     this.obstacles = [];
     this.numberOfObstacles = this.obstacles.length;
     for (
@@ -27,7 +28,6 @@ window.onload = function() {
     ) {
       currentObstacle = new Obstacle();
       this.obstacles.push(currentObstacle);
-      //   this.obstacles = currentObstacle;
       currentObstacle.drawObstacle();
     }
   };
@@ -35,16 +35,22 @@ window.onload = function() {
   Game.prototype.drawGame = function() {
     this.player.drawPlayer();
   };
+
+  Game.prototype.startGame = function() {
+    return null;
+  };
+
   // Player constructor functiom
   var Player = function() {
-    this.x = 100;
-    this.y = 100;
+    this.x = 350;
+    this.y = 250;
     this.r = 20;
     this.startAngle = 0;
     this.endAngle = 2 * Math.PI;
     //   clockwise: anti - clockwise;
     this.boolean = true;
   };
+
   //Draws Player on the board
   Player.prototype.drawPlayer = function() {
     console.log("hey: ", this);
@@ -60,35 +66,16 @@ window.onload = function() {
     );
     ctx.fillStyle = playerColor;
     ctx.fill();
+    ctx.font = "8px Arial";
+    ctx.fillText("p1", this.x, this.y);
   };
 
   //Defining the player move options
 
   Player.prototype.movePlayer = function(clickedKey) {
     // console.log(this.x);
-    ctx.clearRect(0, 0, 500, 500); // NEED TO ACCESS this.x, etc.
+    ctx.clearRect(0, 0, 750, 500); // NEED TO ACCESS this.x, etc.
     switch (clickedKey) {
-      //ISSUE NOT WORKING FOR DIAGONALLS ----------
-      // case 37 && 38:
-      //   console.log("left & up");
-      //   this.x -= 10;
-      //   this.y -= 10;
-      //   break;
-      // case 39 && 38:
-      //   console.log("right & up");
-      //   this.x += 10;
-      //   this.y -= 10;
-      //   break;
-      // case 37 && 40:
-      //   console.log("left & down");
-      //   this.x -= 10;
-      //   this.y += 10;
-      //   break;
-      // case 39 && 40:
-      //   console.log("left & down");
-      //   this.x += 10;
-      //   this.y += 10;
-      //   break;
       case 37:
         console.log("left");
         this.x -= 10;
@@ -113,7 +100,7 @@ window.onload = function() {
   };
   // Obstacle constructor function
   var Obstacle = function() {
-    this.x = Math.floor(Math.random() * 500);
+    this.x = Math.floor(Math.random() * 750);
     this.y = Math.floor(Math.random() * 500);
     this.r = 3 + Math.floor(Math.random() * 100);
     //   this.startAngle = 0);
@@ -123,12 +110,48 @@ window.onload = function() {
   };
 
   //create Obstacles function
-
   Obstacle.prototype.drawObstacle = function() {
+    let color = [
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "indigo",
+      "violet"
+    ];
+    let randomColor = color[Math.floor(Math.random() * color.length)];
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
     ctx.fillStyle = randomColor;
     ctx.fill();
+  };
+
+  //defining obstacle border
+  Obstacle.prototype.left = function() {
+    return this.x - r;
+  };
+
+  Obstacle.prototype.right = function() {
+    return this.x + r;
+  };
+
+  Obstacle.prototype.top = function() {
+    return this.y - r;
+  };
+
+  Obstacle.prototype.top = function() {
+    return this.y + r;
+  };
+
+  //check collission between currentPlayer and obstacle.
+  Obstacle.prototype.checkCollision = function(obstacle) {
+    return !(
+      currentPlayer.x + 20 < obstacle.left() ||
+      currentPlayer.x - 20 > obstacle.right() ||
+      currentPlayer.y + 20 > obstacle.bottom() ||
+      currentPlayer.y - 20 < obstacle.top()
+    );
   };
 
   function startGame() {
@@ -139,17 +162,10 @@ window.onload = function() {
     currentGame.player.drawPlayer();
 
     // CREATES A RANDOM OBSTACLE IF I WRITE LIKE THIS
-    currentObstacle = new Obstacle();
-    currentGame.obstacles.push(currentObstacle);
-    //currentGame.obstacles = currentObstacle;
-    currentObstacle.drawObstacle();
-
-    console.log("OBSTACLES ", currentGame.obstacles);
-
-    currentObstacle2 = new Obstacle();
-    currentGame.obstacles.push(currentObstacle2);
-    //currentGame.obstacles = currentObstacle;
-    currentObstacle2.drawObstacle();
+    // currentObstacle = new Obstacle();
+    // currentGame.obstacles.push(currentObstacle);
+    // //currentGame.obstacles = currentObstacle;
+    // currentObstacle.drawObstacle();
 
     console.log("OBSTACLES ", currentGame.obstacles);
   }
@@ -162,9 +178,9 @@ window.onload = function() {
     currentGame.player.movePlayer(clickedKey);
   };
 
-  //   Game.prototype.update = function() {
-  //     ctx.clearRect(0, 0, 500, 500);
-  //     currentGame.player.drawPlayer();
-  //     create;
-  //   };
+  Game.prototype.update = function() {
+    ctx.clearRect(0, 0, 500, 500);
+    currentGame.player.drawPlayer();
+    currentObstacle.drawObstacle();
+  };
 };
