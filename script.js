@@ -75,16 +75,17 @@ window.onload = function() {
       default:
         console.log("You're pressing the wrong button");
     }
+    //checking collision on playermovement
     this.drawGame();
+    for (var i = 0; i < this.obstacles.length; i++) {
+      if (this.obstacles[i].checkCollision(this.obstacles[i]) === true) {
+        console.log("collission detected");
+        // setTimeout(function() {
+        //   alert("Crashed");
+        // }, 30);
+      }
+    }
   };
-
-  // OBSTACLE MOVEMENT
-  Game.prototype.moveObstacle = function() {
-    ctx.clearRect(0, 0, 750, 500);
-    this.obstacle.x += 5;
-    this.obstacle.y += 5;
-  };
-
   // Player constructor functiom
   var Player = function() {
     this.x = 350;
@@ -130,6 +131,7 @@ window.onload = function() {
     ];
     let randomColor = color[Math.floor(Math.random() * color.length)];
     this.color = randomColor;
+    // ADD this.direction = randomdDirection
   };
 
   //create Obstacles function
@@ -140,21 +142,70 @@ window.onload = function() {
     ctx.fill();
   };
 
+  // OBSTACLE MOVEMENT
+
+  window.onload = function() {
+    //WILL LIKELY NEED TO MOVE THIS TO THE TOP
+    function interval() {
+      setInterval(updateCanvas, 50);
+    }
+  };
+  Game.prototype.updateCanvas = function() {
+    ctx.clearRect(0, 0, 750, 500);
+    this.drawGame();
+    this.updateObstacle();
+  };
+
+  Game.prototype.updateObstacle = function() {
+    for (var numberOfObstacles = 0; numberOfObstacles < 10; numberOfObstacles++)
+      this.obstacles[numberOfObstacles].y += 3;
+  };
+
+  // Game.prototype.moveObstacle = function() {
+  //   this.obstacle.x += 5;
+  //   this.obstacle.y += 5;
+  //   //OR SHOULD I CREATE OBSTACLE DIRECTION VARIABLE AND ADD IT TO THE OBSTACLE
+  //   var direction = [
+  //     north,
+  //     east,
+  //     south,
+  //     west,
+  //     northEast,
+  //     northWest,
+  //     southEast,
+  //     southWest
+  //   ];
+  //   randomDirection = direction[Math.floor(Math.random() * direction.length)];
+  //   this.north = this.obstacle.y -= 2;
+  //   this.south = this.obstacle.y += 2;
+  //   this.east = this.obstacle.x += 2;
+  //   this.west = this.obstacle.x -= 2;
+  //   this.northEast = this.obstacle.x += 2;
+  //   this.obstacle.y -= 2;
+  //   this.southEast = this.obstacle.x += 2;
+  //   this.obstacle.y += 2;
+  //   this.northwest = this.obstacle.x -= 2;
+  //   this.obstacle.y -= 2;
+  //   this.southWest = this.obstacle.x -= 2;
+  //   this.obstacle.y += 2;
+  //ADD direction variable to obstacle
+  // };
+
   //defining obstacle border
   Obstacle.prototype.left = function() {
-    return this.x - r;
+    return this.x - this.r;
   };
 
   Obstacle.prototype.right = function() {
-    return this.x + r;
+    return this.x + this.r;
   };
 
   Obstacle.prototype.top = function() {
-    return this.y - r;
+    return this.y - this.r;
   };
 
-  Obstacle.prototype.top = function() {
-    return this.y + r;
+  Obstacle.prototype.bottom = function() {
+    return this.y + this.r;
   };
 
   //check collission between currentPlayer and obstacle.
