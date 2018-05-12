@@ -205,9 +205,22 @@ window.onload = function() {
       console.log(currentGame.obstacles);
       currentGame.obstacles[i].x += currentGame.obstacles[i].xmovement;
       currentGame.obstacles[i].y += currentGame.obstacles[i].ymovement;
+      if (
+        currentGame.obstacles[i].y + currentGame.obstacles[i].ymovement >
+          canvas.height ||
+        currentGame.obstacles[i].y + currentGame.obstacles[i].ymovement < 0
+      ) {
+        currentGame.obstacles[i].ymovement *= -1;
+      }
+      if (
+        currentGame.obstacles[i].x + currentGame.obstacles[i].xmovement >
+          canvas.width ||
+        currentGame.obstacles[i].x + currentGame.obstacles[i].xmovement < 0
+      ) {
+        currentGame.obstacles[i].xmovement *= -1;
+      }
+
       currentGame.obstacles[i].drawObstacle();
     }
-
-    //this.drawGame();
   };
 };
