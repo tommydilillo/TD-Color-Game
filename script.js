@@ -1,7 +1,16 @@
 window.onload = function() {
+  document.getElementById("start-button").onclick = function() {
+    startGame();
+    interval();
+  };
+
   //global variables
   var currentGame;
   var currentPlayer;
+
+  function interval() {
+    setInterval(currentGame.updateCanvas, 50);
+  }
 
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
@@ -19,31 +28,24 @@ window.onload = function() {
   );
 
   // game constructor function
-  var Game = function() {
+  function Game() {
     this.player = {}; // player => Object
-    this.obstacle = {}; // alan doesn't think needs to be under game.
+    //this.obstacle = {}; // alan doesn't think needs to be under game.
     this.obstacles = [];
     this.numberOfObstacles = this.obstacles.length;
-    for (
-      var numberOfObstacles = 0;
-      numberOfObstacles < 10;
-      numberOfObstacles++
-    ) {
+    // change the number to increase # of obstacles pushed into array
+    for (var i = 0; i < 10; i++) {
       currentObstacle = new Obstacle();
       this.obstacles.push(currentObstacle);
       currentObstacle.drawObstacle();
     }
-  };
+  }
 
   Game.prototype.drawGame = function() {
     this.player.drawPlayer();
     this.numberOfObstacles = this.obstacles.length;
-    for (
-      var numberOfObstacles = 0;
-      numberOfObstacles < 10;
-      numberOfObstacles++
-    ) {
-      this.obstacles[numberOfObstacles].drawObstacle();
+    for (var i = 0; i < 10; i++) {
+      this.obstacles[i].drawObstacle();
     }
   };
 
@@ -53,7 +55,7 @@ window.onload = function() {
 
   // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
-    ctx.clearRect(0, 0, 750, 500);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     switch (clickedKey) {
       case 37:
         console.log("left");
@@ -75,8 +77,9 @@ window.onload = function() {
       default:
         console.log("You're pressing the wrong button");
     }
-    //checking collision on playermovement
     this.drawGame();
+
+    //checking collision on playermovement
     for (var i = 0; i < this.obstacles.length; i++) {
       if (this.obstacles[i].checkCollision(this.obstacles[i]) === true) {
         console.log("collission detected");
@@ -119,7 +122,7 @@ window.onload = function() {
   var Obstacle = function() {
     this.x = Math.floor(Math.random() * 750);
     this.y = Math.floor(Math.random() * 500);
-    this.r = 3 + Math.floor(Math.random() * 100);
+    this.r = 3 + Math.floor(Math.random() * 75);
     let color = [
       "red",
       "orange",
@@ -131,7 +134,8 @@ window.onload = function() {
     ];
     let randomColor = color[Math.floor(Math.random() * color.length)];
     this.color = randomColor;
-    // ADD this.direction = randomdDirection
+    this.xmovement = Math.floor(Math.random() * 10) - 5;
+    this.ymovement = Math.floor(Math.random() * 10) - 5;
   };
 
   //create Obstacles function
@@ -141,55 +145,6 @@ window.onload = function() {
     ctx.fillStyle = this.color;
     ctx.fill();
   };
-
-  // OBSTACLE MOVEMENT
-
-  window.onload = function() {
-    //WILL LIKELY NEED TO MOVE THIS TO THE TOP
-    function interval() {
-      setInterval(updateCanvas, 50);
-    }
-  };
-  Game.prototype.updateCanvas = function() {
-    ctx.clearRect(0, 0, 750, 500);
-    this.drawGame();
-    this.updateObstacle();
-  };
-
-  Game.prototype.updateObstacle = function() {
-    for (var numberOfObstacles = 0; numberOfObstacles < 10; numberOfObstacles++)
-      this.obstacles[numberOfObstacles].y += 3;
-  };
-
-  // Game.prototype.moveObstacle = function() {
-  //   this.obstacle.x += 5;
-  //   this.obstacle.y += 5;
-  //   //OR SHOULD I CREATE OBSTACLE DIRECTION VARIABLE AND ADD IT TO THE OBSTACLE
-  //   var direction = [
-  //     north,
-  //     east,
-  //     south,
-  //     west,
-  //     northEast,
-  //     northWest,
-  //     southEast,
-  //     southWest
-  //   ];
-  //   randomDirection = direction[Math.floor(Math.random() * direction.length)];
-  //   this.north = this.obstacle.y -= 2;
-  //   this.south = this.obstacle.y += 2;
-  //   this.east = this.obstacle.x += 2;
-  //   this.west = this.obstacle.x -= 2;
-  //   this.northEast = this.obstacle.x += 2;
-  //   this.obstacle.y -= 2;
-  //   this.southEast = this.obstacle.x += 2;
-  //   this.obstacle.y += 2;
-  //   this.northwest = this.obstacle.x -= 2;
-  //   this.obstacle.y -= 2;
-  //   this.southWest = this.obstacle.x -= 2;
-  //   this.obstacle.y += 2;
-  //ADD direction variable to obstacle
-  // };
 
   //defining obstacle border
   Obstacle.prototype.left = function() {
@@ -208,7 +163,7 @@ window.onload = function() {
     return this.y + this.r;
   };
 
-  //check collission between currentPlayer and obstacle.
+  //check collission between currentPlayer and obstacle.  returns true if any of the
   Obstacle.prototype.checkCollision = function(obstacle) {
     return !(
       currentPlayer.x + 20 < obstacle.left() ||
@@ -227,18 +182,32 @@ window.onload = function() {
 
     console.log("OBSTACLES ", currentGame.obstacles);
   }
-  //CALL START GAME
-  startGame();
 
+  // sets keydown events which are used in movePlayer
   document.onkeydown = function(e) {
     var clickedKey = e.keyCode;
     console.log(clickedKey);
     currentGame.movePlayer(clickedKey);
   };
 
-  Game.prototype.update = function() {
-    ctx.clearRect(0, 0, 500, 500);
+  // GAME UPDATE
+  // updates obstacle movements...
+  Game.prototype.updateCanvas = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     currentGame.player.drawPlayer();
-    currentObstacle.drawObstacle();
+
+    console.log("PROTOTYPE THIS ====== ", this);
+    console.log("PROTOTYPE THIS ====== ", this.obstacles);
+
+    for (var i = 0; i < currentGame.obstacles.length; i++) {
+      vx = Math.floor(Math.random() * 10) - 5;
+      vy = Math.floor(Math.random() * 10) - 5;
+      console.log(currentGame.obstacles);
+      currentGame.obstacles[i].x += currentGame.obstacles[i].xmovement;
+      currentGame.obstacles[i].y += currentGame.obstacles[i].ymovement;
+      currentGame.obstacles[i].drawObstacle();
+    }
+
+    //this.drawGame();
   };
 };
