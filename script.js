@@ -60,22 +60,31 @@ window.onload = function() {
   // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     switch (clickedKey) {
       case 37:
         // console.log("left");
-        this.player.x -= 20;
+        if (this.player.x > 20) {
+          this.player.x -= 20;
+        }
         break;
       case 38:
         // console.log("up");
-        this.player.y -= 20;
+        if (this.player.y > 20) {
+          this.player.y -= 20;
+        }
         break;
       case 39:
         // console.log("right");
-        this.player.x += 20;
+        if (this.player.x < canvas.width - 20) {
+          this.player.x += 20;
+        }
         break;
       case 40:
         // console.log("down");
-        this.player.y += 20;
+        if (this.player.y < canvas.height - 20) {
+          this.player.y += 20;
+        }
         break;
 
       default:
@@ -248,6 +257,4 @@ window.onload = function() {
       currentGame.obstacles[i].drawObstacle();
     }
   };
-
-
 };
