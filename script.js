@@ -1,5 +1,9 @@
 window.onload = function() {
+  // make score not visible before the game starts
+  document.getElementById("scoreDiv").style.display = "none";
+
   document.getElementById("start-button").onclick = function() {
+    playerColor = document.getElementById("player-color").value;
     startGame();
     interval();
   };
@@ -7,6 +11,7 @@ window.onload = function() {
   //global variables
   var currentGame;
   var currentPlayer;
+  var score = 0;
 
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
@@ -18,7 +23,7 @@ window.onload = function() {
   //defining colors
   var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
   var randomColor = color[Math.floor(Math.random() * color.length)];
-  var playerColor = color[3];
+  var playerColor = "green";
   var obstacleColor = color.splice(playerColor);
   console.log(
     "player color: ",
@@ -30,7 +35,6 @@ window.onload = function() {
   // game constructor function
   function Game() {
     this.player = {}; // player => Object
-    //this.obstacle = {}; // alan doesn't think needs to be under game.
     this.obstacles = [];
     this.numberOfObstacles = this.obstacles.length;
     // change the number to increase # of obstacles pushed into array
@@ -58,35 +62,30 @@ window.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     switch (clickedKey) {
       case 37:
-        console.log("left");
-        this.player.x -= 10;
+        // console.log("left");
+        this.player.x -= 20;
         break;
       case 38:
-        console.log("up");
-        this.player.y -= 10;
+        // console.log("up");
+        this.player.y -= 20;
         break;
       case 39:
-        console.log("right");
-        this.player.x += 10;
+        // console.log("right");
+        this.player.x += 20;
         break;
       case 40:
-        console.log("down");
-        this.player.y += 10;
+        // console.log("down");
+        this.player.y += 20;
         break;
 
       default:
         console.log("You're pressing the wrong button");
     }
-    this.drawGame();
-
-    //checking collision on playermovement
-    for (var i = 0; i < this.obstacles.length; i++) {
-      if (this.obstacles[i].checkCollision(this.obstacles[i]) === true) {
-        console.log("collission detected");
-        // setTimeout(function() {
-        //   alert("Crashed");
-        // }, 30);
-      }
+    // this.drawGame();
+    currentGame.player.drawPlayer();
+    // currentGame.numberOfObstacles = currentGame.obstacles.length;
+    for (var i = 0; i < currentGame.obstacles.length; i++) {
+      currentGame.obstacles[i].drawObstacle();
     }
   };
   // Player constructor functiom
@@ -102,7 +101,7 @@ window.onload = function() {
 
   //Draws Player on the board
   Player.prototype.drawPlayer = function() {
-    console.log("hey: ", this);
+    // console.log("hey: ", this);
     ctx.beginPath();
     ctx.arc(
       this.x,
@@ -175,34 +174,59 @@ window.onload = function() {
 
   function startGame() {
     console.log("start-game works");
+    document.getElementById("scoreDiv").style.display = "block";
     currentGame = new Game();
     currentPlayer = new Player();
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
 
-    console.log("OBSTACLES ", currentGame.obstacles);
+    // console.log("OBSTACLES ", currentGame.obstacles);
   }
 
   // sets keydown events which are used in movePlayer
   document.onkeydown = function(e) {
     var clickedKey = e.keyCode;
-    console.log(clickedKey);
+    // console.log(clickedKey);
     currentGame.movePlayer(clickedKey);
   };
 
-  // GAME UPDATE
   // updates obstacle movements...
   Game.prototype.updateCanvas = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     currentGame.player.drawPlayer();
 
-    console.log("PROTOTYPE THIS ====== ", this);
-    console.log("PROTOTYPE THIS ====== ", this.obstacles);
-
+    //loop for all obstacles
     for (var i = 0; i < currentGame.obstacles.length; i++) {
+      //CHECK COLLISSIONS
+
+      // if collision is same color.  +1 point and splice obstacle.
+      if (
+        currentGame.obstacles[i].checkCollision(currentGame.obstacles[i]) ===
+          true &&
+        playerColor === currentGame.obstacles[i].color
+      ) {
+        currentGame.obstacles.splice(i, 1);
+        score++;
+        document.getElementById("score").innerHTML = score;
+
+        console.log("score:", score);
+      }
+
+      //
+      if (
+        currentGame.obstacles[i].checkCollision(currentGame.obstacles[i]) ===
+        true
+      ) {
+        console.log("collision detected");
+        // setTimeout(function() {
+        //   alert("wrong color! you lose");
+        // }, 5);
+      }
+
+      //creates random movement for obstacles
       vx = Math.floor(Math.random() * 10) - 5;
       vy = Math.floor(Math.random() * 10) - 5;
-      console.log(currentGame.obstacles);
+
       currentGame.obstacles[i].x += currentGame.obstacles[i].xmovement;
       currentGame.obstacles[i].y += currentGame.obstacles[i].ymovement;
       if (
@@ -212,6 +236,7 @@ window.onload = function() {
       ) {
         currentGame.obstacles[i].ymovement *= -1;
       }
+      //creates boundaries for obstacles
       if (
         currentGame.obstacles[i].x + currentGame.obstacles[i].xmovement >
           canvas.width ||
@@ -223,4 +248,6 @@ window.onload = function() {
       currentGame.obstacles[i].drawObstacle();
     }
   };
+
+
 };
