@@ -128,9 +128,9 @@ window.onload = function() {
   };
 
   var Obstacle = function() {
-    this.x = Math.floor(Math.random() * 750);
+    this.x = Math.floor(Math.random() * 500);
     this.y = Math.floor(Math.random() * 500);
-    this.r = 3 + Math.floor(Math.random() * 75);
+    this.r = 10 + Math.floor(Math.random() * 75);
     let color = [
       "red",
       "orange",
@@ -142,8 +142,8 @@ window.onload = function() {
     ];
     let randomColor = color[Math.floor(Math.random() * color.length)];
     this.color = randomColor;
-    this.xmovement = Math.floor(Math.random() * 10) - 5;
-    this.ymovement = Math.floor(Math.random() * 10) - 5;
+    this.xMovement = Math.floor(Math.random() * 10) - 5;
+    this.yMovement = Math.floor(Math.random() * 10) - 5;
   };
 
   //create Obstacles function
@@ -233,25 +233,25 @@ window.onload = function() {
       }
 
       //creates random movement for obstacles
-      vx = Math.floor(Math.random() * 10) - 5;
-      vy = Math.floor(Math.random() * 10) - 5;
+      // vx = Math.floor(Math.random() * 10) - 5;
+      // vy = Math.floor(Math.random() * 10) - 5;
 
-      currentGame.obstacles[i].x += currentGame.obstacles[i].xmovement;
-      currentGame.obstacles[i].y += currentGame.obstacles[i].ymovement;
+      currentGame.obstacles[i].x += currentGame.obstacles[i].xMovement;
+      currentGame.obstacles[i].y += currentGame.obstacles[i].yMovement;
       if (
-        currentGame.obstacles[i].y + currentGame.obstacles[i].ymovement >
+        currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement >
           canvas.height ||
-        currentGame.obstacles[i].y + currentGame.obstacles[i].ymovement < 0
+        currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement < 0
       ) {
-        currentGame.obstacles[i].ymovement *= -1;
+        currentGame.obstacles[i].yMovement *= -1;
       }
       //creates boundaries for obstacles
       if (
-        currentGame.obstacles[i].x + currentGame.obstacles[i].xmovement >
+        currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement >
           canvas.width ||
-        currentGame.obstacles[i].x + currentGame.obstacles[i].xmovement < 0
+        currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement < 0
       ) {
-        currentGame.obstacles[i].xmovement *= -1;
+        currentGame.obstacles[i].xMovement *= -1;
       }
 
       currentGame.obstacles[i].drawObstacle();
