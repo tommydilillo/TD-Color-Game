@@ -37,11 +37,20 @@ window.onload = function() {
     this.player = {}; // player => Object
     this.obstacles = [];
     this.numberOfObstacles = this.obstacles.length;
+    this.virtualCanvas = {
+      width: 2000,
+      height: 2000,
+      canvasX: 1000,
+      canvasY: 1000
+    };
     // change the number to increase # of obstacles pushed into array
-    for (var i = 0; i < 10; i++) {
-      currentObstacle = new Obstacle();
+    for (var i = 0; i < 100; i++) {
+      currentObstacle = new Obstacle(
+        this.virtualCanvas.width,
+        this.virtualCanvas.height
+      );
       this.obstacles.push(currentObstacle);
-      currentObstacle.drawObstacle();
+      // currentObstacle.drawObstacle();
     }
   }
 
@@ -62,28 +71,36 @@ window.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     switch (clickedKey) {
-      case 37:
-        // console.log("left");
-        if (this.player.x > 20) {
-          this.player.x -= 20;
+      case 37: // console.log("left");
+        this.player.x -= 20;
+        console.log("this.player.x ", this.player.x);
+        console.log("virtualCanvas.canvasX", this.virtualCanvas.canvasX);
+        if (this.player.x <= this.virtualCanvas.width - canvas.width / 2) {
+          this.virtualCanvas.canvasX -= 20;
         }
         break;
-      case 38:
-        // console.log("up");
-        if (this.player.y > 20) {
-          this.player.y -= 20;
+      case 38: // console.log("up");
+        this.player.y -= 20;
+        console.log("this.player.y ", this.player.y);
+        console.log("virtualCanvas.canvasY", this.virtualCanvas.canvasY);
+        if (this.player.y <= this.virtualCanvas.height - canvas.height / 2) {
+          this.virtualCanvas.canvasY -= 20;
         }
         break;
-      case 39:
-        // console.log("right");
-        if (this.player.x < canvas.width - 20) {
-          this.player.x += 20;
+      case 39: // console.log("right");
+        this.player.x += 20;
+        console.log("this.player.x ", this.player.x);
+        console.log("virtualCanvas.canvasX", this.virtualCanvas.canvasX);
+        if (this.player.x <= this.virtualCanvas.width - canvas.width / 2) {
+          this.virtualCanvas.canvasX += 20;
         }
         break;
-      case 40:
-        // console.log("down");
-        if (this.player.y < canvas.height - 20) {
-          this.player.y += 20;
+      case 40: // console.log("down");
+        this.player.y += 20;
+        console.log("this.player.y ", this.player.y);
+        console.log("virtualCanvas.canvasY", this.virtualCanvas.canvasY);
+        if (this.player.y <= this.virtualCanvas.height - canvas.height / 2) {
+          this.virtualCanvas.canvasY += 20;
         }
         break;
 
@@ -94,13 +111,14 @@ window.onload = function() {
     currentGame.player.drawPlayer();
     // currentGame.numberOfObstacles = currentGame.obstacles.length;
     for (var i = 0; i < currentGame.obstacles.length; i++) {
-      currentGame.obstacles[i].drawObstacle();
+      currentGame.obstacles[i].drawObstacle(currentGame.virtualCanvas);
     }
   };
+
   // Player constructor functiom
   var Player = function() {
-    this.x = 350;
-    this.y = 250;
+    this.x = canvas.width / 2;
+    this.y = canvas.height / 2;
     this.r = 20;
     this.startAngle = 0;
     this.endAngle = 2 * Math.PI;
@@ -127,9 +145,9 @@ window.onload = function() {
     ctx.fillText("p1", this.x, this.y);
   };
 
-  var Obstacle = function() {
-    this.x = Math.floor(Math.random() * 500);
-    this.y = Math.floor(Math.random() * 500);
+  var Obstacle = function(canvasWith, canvasHeight) {
+    this.x = Math.floor(Math.random() * canvasWith);
+    this.y = Math.floor(Math.random() * canvasHeight);
     this.r = 10 + Math.floor(Math.random() * 75);
     let color = [
       "red",
@@ -147,9 +165,17 @@ window.onload = function() {
   };
 
   //create Obstacles function
-  Obstacle.prototype.drawObstacle = function() {
+  Obstacle.prototype.drawObstacle = function(virtualCanvas) {
+    // console.log("virtualCanvas ", virtualCanvas);
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
+    ctx.arc(
+      this.x - virtualCanvas.canvasX,
+      this.y - virtualCanvas.canvasY,
+      this.r,
+      0,
+      2 * Math.PI,
+      true
+    );
     ctx.fillStyle = this.color;
     ctx.fill();
   };
@@ -233,14 +259,11 @@ window.onload = function() {
       }
 
       //creates random movement for obstacles
-      // vx = Math.floor(Math.random() * 10) - 5;
-      // vy = Math.floor(Math.random() * 10) - 5;
-
       currentGame.obstacles[i].x += currentGame.obstacles[i].xMovement;
       currentGame.obstacles[i].y += currentGame.obstacles[i].yMovement;
       if (
         currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement >
-          canvas.height ||
+          currentGame.virtualCanvas.height ||
         currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement < 0
       ) {
         currentGame.obstacles[i].yMovement *= -1;
@@ -248,13 +271,13 @@ window.onload = function() {
       //creates boundaries for obstacles
       if (
         currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement >
-          canvas.width ||
+          currentGame.virtualCanvas.width ||
         currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement < 0
       ) {
         currentGame.obstacles[i].xMovement *= -1;
       }
 
-      currentGame.obstacles[i].drawObstacle();
+      currentGame.obstacles[i].drawObstacle(currentGame.virtualCanvas);
     }
   };
 };
