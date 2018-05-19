@@ -177,8 +177,11 @@ window.onload = function() {
     );
     ctx.fillStyle = playerColor;
     ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
     ctx.font = "8px Arial";
-    ctx.fillText("p1", this.x, this.y);
+    ctx.fillText("p1", this.x, this.y); //not working
   };
 
   var Obstacle = function(canvasWidth, canvasHeight) {
@@ -300,6 +303,7 @@ window.onload = function() {
       //creates random movement for obstacles
       currentGame.obstacles[i].x += currentGame.obstacles[i].xMovement;
       currentGame.obstacles[i].y += currentGame.obstacles[i].yMovement;
+      //-------------y/width boundaries for obstacles
       if (
         currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement >
           currentGame.virtualCanvas.height ||
@@ -307,7 +311,7 @@ window.onload = function() {
       ) {
         currentGame.obstacles[i].yMovement *= -1;
       }
-      //creates boundaries for obstacles
+      //-------------x/width boundaries for obstacles
       if (
         currentGame.obstacles[i].x > currentGame.virtualCanvas.width ||
         currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement < 0
