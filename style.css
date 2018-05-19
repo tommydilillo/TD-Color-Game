@@ -1,9 +1,29 @@
 canvas {
-  border: 1px solid red;
+  border: 1px solid indigo;
   background-color: lightgrey;
   /* background-image: url("http://www.zbrushcentral.com/showthread.php?129990-background-grid"); */
 }
 
 body {
-  font-family: fantasy;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.title {
+  background-color: lightskyblue;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  border: 1px solid black;
+  width: 750px;
+  padding: 10px 0;
+}
+
+.game-functions {
+  background-color: lightgoldenrodyellow;
+  text-align: left;
+  font-size: 16px;
+  color: black;
+  border: 1px solid black;
+  width: 350px;
+  padding: 5px;
 }

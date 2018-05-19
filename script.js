@@ -38,10 +38,10 @@ window.onload = function() {
     this.obstacles = [];
     // this.numberOfObstacles = this.obstacles.length;
     this.virtualCanvas = {
-      width: 3000,
-      height: 3000,
-      canvasX: 1500,
-      canvasY: 1500
+      width: 1000,
+      height: 1000,
+      canvasX: 500,
+      canvasY: 500
     };
     // change the number to increase # of obstacles pushed into array
     for (var i = 0; i < 100; i++) {
@@ -50,7 +50,6 @@ window.onload = function() {
         this.virtualCanvas.height
       );
       this.obstacles.push(currentObstacle);
-      // currentObstacle.drawObstacle();
     }
   }
 
@@ -65,7 +64,7 @@ window.onload = function() {
   // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    // HERE
     var xInnerBoundary =
       this.virtualCanvas.canvasX <= canvas.width / 2 ||
       this.virtualCanvas.canvasX >= this.virtualCanvas.width - canvas.width / 2;
@@ -77,7 +76,10 @@ window.onload = function() {
 
     switch (clickedKey) {
       case 37: // console.log("left");
-        if (this.virtualCanvas.canvasX >= 0) {
+        if (xInnerBoundary && this.virtualCanvas.canvasX >= 0) {
+          this.virtualCanvas.canvasX -= 20;
+          this.player.x -= 20;
+        } else if (this.virtualCanvas.canvasX >= 0) {
           this.virtualCanvas.canvasX -= 20;
           console.log("xInnerBoundary: ", xInnerBoundary);
           console.log(
@@ -85,13 +87,15 @@ window.onload = function() {
             this.virtualCanvas.canvasX
           );
         }
-        if (xInnerBoundary === true && this.virtualCanvas.canvasX >= 0) {
-          this.virtualCanvas.canvasX -= 20;
-          this.player.x -= 20;
-        }
         break;
       case 38: // console.log("up");
-        if (this.virtualCanvas.canvasY >= 0) {
+        console.log("yInnerBoundary: ", yInnerBoundary);
+        console.log("this.virtualCanvas.canvasY: ", this.virtualCanvas.canvasY);
+        if (yInnerBoundary === true && this.virtualCanvas.canvasY >= 0) {
+          this.virtualCanvas.canvasY -= 20;
+          this.player.y -= 20;
+          console.log("this.player.y: ", this.player.y);
+        } else if (this.virtualCanvas.canvasY >= 0) {
           this.virtualCanvas.canvasY -= 20;
           console.log("yInnerBoundary: ", yInnerBoundary);
           console.log(
@@ -99,31 +103,34 @@ window.onload = function() {
             this.virtualCanvas.canvasY
           );
         }
-        if (yInnerBoundary === true && this.virtualCanvas.canvasY >= 0) {
-          this.virtualCanvas.canvasY -= 20;
-          this.player.y -= 20;
-          console.log("this.player.y: ", this.player.y);
-        }
+
         break;
       case 39: // console.log("right");
-        if (this.virtualCanvas.canvasX <= this.virtualCanvas.width) {
-          this.virtualCanvas.canvasX += 20;
-          console.log("xInnerBoundary: ", xInnerBoundary);
-          console.log(
-            "this.virtualCanvas.canvasX: ",
-            this.virtualCanvas.canvasX
-          );
-        }
         if (
           xInnerBoundary === true &&
           this.virtualCanvas.canvasX <= this.virtualCanvas.width
         ) {
           this.virtualCanvas.canvasX += 20;
           this.player.x += 20;
+        } else if (this.virtualCanvas.canvasX <= this.virtualCanvas.width) {
+          this.virtualCanvas.canvasX += 20;
+          console.log("xInnerBoundary: ", xInnerBoundary);
+          console.log(
+            "this.virtualCanvas.canvasX: ",
+            this.virtualCanvas.canvasX
+          );
         }
+
         break;
       case 40: // console.log("down");
-        if (this.virtualCanvas.canvasY <= this.virtualCanvas.height) {
+        if (
+          yInnerBoundary &&
+          this.virtualCanvas.canvasY <= this.virtualCanvas.height
+        ) {
+          this.virtualCanvas.canvasY += 20;
+          this.player.y += 20;
+          console.log("this.player.y: ", this.player.y);
+        } else if (this.virtualCanvas.canvasY <= this.virtualCanvas.height) {
           this.virtualCanvas.canvasY += 20;
           console.log("yInnerBoundary: ", yInnerBoundary);
           console.log(
@@ -131,14 +138,7 @@ window.onload = function() {
             this.virtualCanvas.canvasY
           );
         }
-        if (
-          yInnerBoundary === true &&
-          this.virtualCanvas.canvasY <= this.virtualCanvas.height
-        ) {
-          this.virtualCanvas.canvasY += 20;
-          this.player.y += 20;
-          console.log("this.player.y: ", this.player.y);
-        }
+
         break;
 
       default:
@@ -185,6 +185,7 @@ window.onload = function() {
   };
 
   var Obstacle = function(canvasWidth, canvasHeight) {
+    //canvasWidth and canvasHeight  take virtualCanvas.width and virtualCanvas.height
     this.x = Math.floor(Math.random() * canvasWidth);
     this.y = Math.floor(Math.random() * canvasHeight);
     this.r = 10 + Math.floor(Math.random() * 75);
@@ -237,13 +238,14 @@ window.onload = function() {
     return this.y + this.r;
   };
 
-  //check collission between currentPlayer and obstacle.  returns true if any of the
-  Obstacle.prototype.checkCollision = function(obstacle) {
+  //check collission between currentPlayer and obstacle.
+  //Returns true if any of the obstacle hits player
+  Obstacle.prototype.checkCollision = function() {
     return !(
-      currentPlayer.x + 20 < obstacle.left() ||
-      currentPlayer.x - 20 > obstacle.right() ||
-      currentPlayer.y + 20 > obstacle.bottom() ||
-      currentPlayer.y - 20 < obstacle.top()
+      currentPlayer.x + 20 < this.left() ||
+      currentPlayer.x - 20 > this.right() ||
+      currentPlayer.y + 20 > this.bottom() ||
+      currentPlayer.y - 20 < this.top()
     );
   };
 
@@ -255,7 +257,7 @@ window.onload = function() {
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
 
-    // console.log("OBSTACLES ", currentGame.obstacles);
+    console.log("OBSTACLES ", currentGame.obstacles);
   }
 
   // sets keydown events which are used in movePlayer
@@ -278,8 +280,7 @@ window.onload = function() {
 
       // if collision is same color.  +1 point and splice obstacle.
       if (
-        currentGame.obstacles[i].checkCollision(currentGame.obstacles[i]) ===
-          true &&
+        currentGame.obstacles[i].checkCollision() &&
         playerColor === currentGame.obstacles[i].color
       ) {
         currentGame.obstacles.splice(i, 1);
@@ -290,10 +291,7 @@ window.onload = function() {
       }
 
       //
-      if (
-        currentGame.obstacles[i].checkCollision(currentGame.obstacles[i]) ===
-        true
-      ) {
+      if (currentGame.obstacles[i].checkCollision() === true) {
         console.log("collision detected");
         // setTimeout(function() {
         //   alert("wrong color! you lose");
@@ -302,19 +300,21 @@ window.onload = function() {
 
       //creates random movement for obstacles
       currentGame.obstacles[i].x += currentGame.obstacles[i].xMovement;
+      //console.log("X ==== ", currentGame.obstacles[i].x);
       currentGame.obstacles[i].y += currentGame.obstacles[i].yMovement;
+      //console.log("Y ==== ", currentGame.obstacles[i].y);
       //-------------y/width boundaries for obstacles
       if (
-        currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement >
-          currentGame.virtualCanvas.height ||
-        currentGame.obstacles[i].y + currentGame.obstacles[i].yMovement < 0
+        currentGame.obstacles[i].bottom() > currentGame.virtualCanvas.height ||
+        currentGame.obstacles[i].top() < 0
       ) {
+        // debugger;
         currentGame.obstacles[i].yMovement *= -1;
       }
       //-------------x/width boundaries for obstacles
       if (
-        currentGame.obstacles[i].x > currentGame.virtualCanvas.width ||
-        currentGame.obstacles[i].x + currentGame.obstacles[i].xMovement < 0
+        currentGame.obstacles[i].right() > currentGame.virtualCanvas.width ||
+        currentGame.obstacles[i].left() < 0
       ) {
         currentGame.obstacles[i].xMovement *= -1;
       }
