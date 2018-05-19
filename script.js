@@ -36,12 +36,12 @@ window.onload = function() {
   function Game() {
     this.player = {}; // player => Object
     this.obstacles = [];
-    this.numberOfObstacles = this.obstacles.length;
+    // this.numberOfObstacles = this.obstacles.length;
     this.virtualCanvas = {
-      width: 2000,
-      height: 2000,
-      canvasX: 1000,
-      canvasY: 1000
+      width: 3000,
+      height: 3000,
+      canvasX: 1500,
+      canvasY: 1500
     };
     // change the number to increase # of obstacles pushed into array
     for (var i = 0; i < 100; i++) {
@@ -56,10 +56,6 @@ window.onload = function() {
 
   Game.prototype.drawGame = function() {
     this.player.drawPlayer();
-    this.numberOfObstacles = this.obstacles.length;
-    for (var i = 0; i < 10; i++) {
-      this.obstacles[i].drawObstacle();
-    }
   };
 
   Game.prototype.startGame = function() {
@@ -97,9 +93,9 @@ window.onload = function() {
       case 38: // console.log("up");
         if (this.virtualCanvas.canvasY >= 0) {
           this.virtualCanvas.canvasY -= 20;
-          console.log("xInnerBoundary: ", xInnerBoundary);
+          console.log("yInnerBoundary: ", yInnerBoundary);
           console.log(
-            "this.virtualCanvas.canvasX: ",
+            "this.virtualCanvas.canvasY: ",
             this.virtualCanvas.canvasY
           );
         }
@@ -129,13 +125,16 @@ window.onload = function() {
       case 40: // console.log("down");
         if (this.virtualCanvas.canvasY <= this.virtualCanvas.height) {
           this.virtualCanvas.canvasY += 20;
-          console.log("xInnerBoundary: ", xInnerBoundary);
+          console.log("yInnerBoundary: ", yInnerBoundary);
           console.log(
-            "this.virtualCanvas.canvasX: ",
+            "this.virtualCanvas.canvasY: ",
             this.virtualCanvas.canvasY
           );
         }
-        if (yInnerBoundary === true && this.virtualCanvas.canvasY <= 2000) {
+        if (
+          yInnerBoundary === true &&
+          this.virtualCanvas.canvasY <= this.virtualCanvas.height
+        ) {
           this.virtualCanvas.canvasY += 20;
           this.player.y += 20;
           console.log("this.player.y: ", this.player.y);
@@ -269,6 +268,8 @@ window.onload = function() {
     currentGame.player.drawPlayer();
 
     //loop for all obstacles
+
+    var samecolor = [];
     for (var i = 0; i < currentGame.obstacles.length; i++) {
       //CHECK COLLISSIONS
 
