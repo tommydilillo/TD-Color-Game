@@ -38,10 +38,10 @@ window.onload = function() {
     this.obstacles = [];
     // this.numberOfObstacles = this.obstacles.length;
     this.virtualCanvas = {
-      width: 1000,
-      height: 1000,
-      canvasX: 500,
-      canvasY: 500
+      width: 3000,
+      height: 3000,
+      canvasX: 1500,
+      canvasY: 1500
     };
     // change the number to increase # of obstacles pushed into array
     for (var i = 0; i < 100; i++) {
@@ -76,67 +76,64 @@ window.onload = function() {
 
     switch (clickedKey) {
       case 37: // console.log("left");
-        if (xInnerBoundary && this.virtualCanvas.canvasX >= 0) {
+        console.log("xInnerBoundary: ", xInnerBoundary);
+        console.log("this.virtualCanvas.canvasX: ", this.virtualCanvas.canvasX);
+        console.log("this.player.x: ", this.player.x);
+        if (xInnerBoundary && this.virtualCanvas.canvasX > this.player.r) {
           this.virtualCanvas.canvasX -= 20;
           this.player.x -= 20;
-        } else if (this.virtualCanvas.canvasX >= 0) {
+        } else if (this.virtualCanvas.canvasX > this.player.r) {
           this.virtualCanvas.canvasX -= 20;
-          console.log("xInnerBoundary: ", xInnerBoundary);
-          console.log(
-            "this.virtualCanvas.canvasX: ",
-            this.virtualCanvas.canvasX
-          );
         }
         break;
       case 38: // console.log("up");
         console.log("yInnerBoundary: ", yInnerBoundary);
         console.log("this.virtualCanvas.canvasY: ", this.virtualCanvas.canvasY);
-        if (yInnerBoundary === true && this.virtualCanvas.canvasY >= 0) {
+        console.log("this.player.y: ", this.player.y);
+        if (
+          yInnerBoundary === true &&
+          this.virtualCanvas.canvasY > this.player.r
+        ) {
           this.virtualCanvas.canvasY -= 20;
           this.player.y -= 20;
-          console.log("this.player.y: ", this.player.y);
-        } else if (this.virtualCanvas.canvasY >= 0) {
+        } else if (this.virtualCanvas.canvasY > this.player.r) {
           this.virtualCanvas.canvasY -= 20;
-          console.log("yInnerBoundary: ", yInnerBoundary);
-          console.log(
-            "this.virtualCanvas.canvasY: ",
-            this.virtualCanvas.canvasY
-          );
         }
 
         break;
       case 39: // console.log("right");
+        console.log("xInnerBoundary: ", xInnerBoundary);
+        console.log("this.virtualCanvas.canvasX: ", this.virtualCanvas.canvasX);
+        console.log("this.player.x: ", this.player.x);
         if (
           xInnerBoundary === true &&
-          this.virtualCanvas.canvasX <= this.virtualCanvas.width
+          this.virtualCanvas.canvasX < this.virtualCanvas.width - this.player.r
         ) {
           this.virtualCanvas.canvasX += 20;
           this.player.x += 20;
-        } else if (this.virtualCanvas.canvasX <= this.virtualCanvas.width) {
+        } else if (
+          this.virtualCanvas.canvasX <
+          this.virtualCanvas.width - this.player.r
+        ) {
           this.virtualCanvas.canvasX += 20;
-          console.log("xInnerBoundary: ", xInnerBoundary);
-          console.log(
-            "this.virtualCanvas.canvasX: ",
-            this.virtualCanvas.canvasX
-          );
         }
 
         break;
       case 40: // console.log("down");
+        console.log("yInnerBoundary: ", yInnerBoundary);
+        console.log("this.virtualCanvas.canvasY: ", this.virtualCanvas.canvasY);
+        console.log("this.player.y: ", this.player.y);
         if (
           yInnerBoundary &&
-          this.virtualCanvas.canvasY <= this.virtualCanvas.height
+          this.virtualCanvas.canvasY < this.virtualCanvas.height - this.player.r
         ) {
           this.virtualCanvas.canvasY += 20;
           this.player.y += 20;
-          console.log("this.player.y: ", this.player.y);
-        } else if (this.virtualCanvas.canvasY <= this.virtualCanvas.height) {
+        } else if (
+          this.virtualCanvas.canvasY <
+          this.virtualCanvas.height - this.player.r
+        ) {
           this.virtualCanvas.canvasY += 20;
-          console.log("yInnerBoundary: ", yInnerBoundary);
-          console.log(
-            "this.virtualCanvas.canvasY: ",
-            this.virtualCanvas.canvasY
-          );
         }
 
         break;
@@ -297,6 +294,8 @@ window.onload = function() {
         //   alert("wrong color! you lose");
         // }, 5);
       }
+      if (currentGame.obstacles[i].right > 950)
+        console.log(currentGame.obstacles[i].right);
 
       //creates random movement for obstacles
       currentGame.obstacles[i].x += currentGame.obstacles[i].xMovement;
