@@ -42,4 +42,37 @@ button {
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
+  position: float;
+}
+
+select {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.quest {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 30%;
+  margin: 5px;
+}
+
+#scoreDiv {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 8px 20px;
+  margin: 5px;
+  width: 10%;
+}
+
+#color-block {
+  background-color: red;
+  display: inline-block;
 }
