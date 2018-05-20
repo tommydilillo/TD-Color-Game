@@ -38,12 +38,12 @@ window.onload = function() {
     this.obstacles = [];
     // this.numberOfObstacles = this.obstacles.length;
     this.virtualCanvas = {
-      width: 3000,
-      height: 3000,
-      canvasX: 3000 / 2 - canvas.width / 2,
-      canvasY: 3000 / 2 - canvas.height / 2,
-      virtualPlayerX: 1500,
-      virtualPlayerY: 1500
+      width: 4000,
+      height: 4000,
+      canvasX: 4000 / 2 - canvas.width / 2,
+      canvasY: 4000 / 2 - canvas.height / 2,
+      virtualPlayerX: 2000,
+      virtualPlayerY: 2000
     };
     // change the number to increase # of obstacles pushed into array
     for (var i = 0; i < 100; i++) {
@@ -52,6 +52,7 @@ window.onload = function() {
         this.virtualCanvas.height
       );
       this.obstacles.push(currentObstacle);
+      // limiting the number of obstacles with the player color to 10.
     }
   }
 
@@ -215,7 +216,7 @@ window.onload = function() {
     //canvasWidth and canvasHeight  take virtualCanvas.width and virtualCanvas.height
     this.x = Math.floor(Math.random() * canvasWidth);
     this.y = Math.floor(Math.random() * canvasHeight);
-    this.r = 10 + Math.floor(Math.random() * 75);
+    this.r = 30 + Math.floor(Math.random() * 50);
     let color = [
       "red",
       "orange",
@@ -285,6 +286,7 @@ window.onload = function() {
     currentGame.player.drawPlayer();
 
     console.log("OBSTACLES ", currentGame.obstacles);
+    console.log("OBSTACLES ", currentGame.obstacles.color === playerColor);
   }
 
   // sets keydown events which are used in movePlayer

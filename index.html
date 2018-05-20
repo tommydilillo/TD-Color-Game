@@ -14,26 +14,25 @@
     <h1 class="title">Color Quest</h1>
 
     <div>
-        <div class="game-functions">
-            <label>Choose your Color:</label>
-            <select id="player-color">
-                <option value="red">Red</option>
-                <option value="orange">Orange</option>
-                <option value="yellow">Yellow</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-                <option value="indigo">Indigo</option>
-                <option value="violet">Violet</option>
-            </select>
-
-            <button id="start-button">StartGame</button>
-            <div id="scoreDiv">Score:
-                <span id="score">0</span>
-            </div>
-        </div>
-        <div>
-            <canvas id="canvas" width="720" height="520"></canvas>
-        </div>
+        <label>Choose your Color:</label>
+        <select id="player-color">
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="indigo">Indigo</option>
+            <option value="violet">Violet</option>
+        </select>
+    </div>
+    <button id="start-button">Start Game</button>
+    <div id="scoreDiv">Score:
+        <span id="score">0</span>
+    </div>
+    <div class="flex-item">
+        <span>Your Quest:</span> Capture all the circles of the same Color. Hint: there are 10 of them.</div>
+    <div>
+        <canvas id="canvas" width="720" height="520"></canvas>
     </div>
     <script type="text/javascript" src="script.js"></script>
 

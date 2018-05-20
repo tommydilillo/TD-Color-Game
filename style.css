@@ -18,7 +18,7 @@ body {
   padding: 10px 0;
 }
 
-.game-functions {
+/* .game-functions {
   background-color: lightgoldenrodyellow;
   text-align: left;
   font-size: 16px;
@@ -26,4 +26,20 @@ body {
   border: 1px solid black;
   width: 350px;
   padding: 5px;
+} */
+
+.flex-container {
+  flex-direction: row;
+}
+.flex-item {
+  border: 1px solid black;
+  list-style: none;
+  width: 30%;
+}
+button {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  font-weight: bold;
+  text-align: center;
 }
