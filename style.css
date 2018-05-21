@@ -8,25 +8,15 @@ body {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
-.title {
+nav {
   background-color: lightskyblue;
-  text-align: center;
+  text-align: left;
   font-size: 40px;
   color: white;
-  border: 1px solid black;
-  width: 720px;
-  padding: 10px 0;
+  border-bottom: 1px solid silver;
+  width: 100%;
+  padding: 10px 20px;
 }
-
-/* .game-functions {
-  background-color: lightgoldenrodyellow;
-  text-align: left;
-  font-size: 16px;
-  color: black;
-  border: 1px solid black;
-  width: 350px;
-  padding: 5px;
-} */
 
 .flex-container {
   flex-direction: row;
@@ -42,7 +32,7 @@ button {
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
-  position: float;
+  display: inline-block;
 }
 
 select {
@@ -51,6 +41,7 @@ select {
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
+  display: inline-block;
 }
 
 .quest {
@@ -60,6 +51,7 @@ select {
   border: 1px solid black;
   width: 30%;
   margin: 5px;
+  display: inline-block;
 }
 
 #scoreDiv {
@@ -67,12 +59,14 @@ select {
   font-size: 14px;
   border-radius: 3px;
   border: 1px solid black;
-  padding: 8px 20px;
   margin: 5px;
   width: 10%;
+  display: inline-block;
 }
 
-#color-block {
-  background-color: red;
+.color-bar {
+  flex-wrap: nowrap;
+  width: 10px;
+  height: 20px;
   display: inline-block;
 }
