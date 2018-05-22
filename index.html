@@ -58,34 +58,36 @@
 
     </div>
 
+    <div class="container">
+        <div class="quest ">
+            <span>Your Quest:</span> Capture all the circles of the same Color.
+            <br>
+            <em>Hint: there are 10 of them.</em>
+        </div>
+
+        <div class="color-select">
+            <label>Choose your Color:</label>
+            <select id="player-color">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="indigo">Indigo</option>
+                <option value="violet">Violet</option>
+            </select>
+            <div id="color-clock"></div>
+        </div>
+
+        <button id="start-button">Start Game</button>
+
+        <div id="scoreDiv">Score:
+            <span id="score">0</span>
+        </div>
+
+    </div>
     <div>
-        <label>Choose your Color:</label>
-        <select id="player-color">
-            <option value="red">Red</option>
-            <option value="orange">Orange</option>
-            <option value="yellow">Yellow</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="indigo">Indigo</option>
-            <option value="violet ">Violet</option>
-        </select>
-        <div id="color-clock"></div>
-    </div>
-
-
-    <div class="quest ">
-        <span>Your Quest:</span> Capture all the circles of the same Color.
-        <br>
-        <em>Hint: there are 10 of them.</em>
-    </div>
-    <button id="start-button">Start Game</button>
-
-    <div id="scoreDiv">Score:
-        <span id="score">0</span>
-    </div>
-
-    <div>
-        <canvas id="canvas" width="720 " height="520 "></canvas>
+        <canvas id="canvas" width="720 " height="520"></canvas>
     </div>
 
 

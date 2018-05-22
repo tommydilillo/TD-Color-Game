@@ -1,11 +1,21 @@
+body {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
 canvas {
   border: 1px solid indigo;
   background-color: lightgrey;
-  /* background-image: url("http://www.zbrushcentral.com/showthread.php?129990-background-grid"); */
+  padding: 0;
+  margin: auto;
+  display: block;
 }
 
-body {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+.container {
+  border: 1px solid indigo;
+  background-color: lightgoldenrodyellow;
+  padding: 0;
+  margin: auto;
+  width: 720px;
 }
 
 nav {
@@ -27,14 +37,19 @@ nav {
   width: 30%;
 }
 button {
-  padding: 8px 20px;
-  font-size: 14px;
+  padding: 20px 30px;
+  font-size: 20px;
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
-  display: inline-block;
+  float: right;
+  margin: 5px 30px;
 }
 
+.color-select {
+  float: right;
+  padding: 5px;
+}
 select {
   padding: 8px 20px;
   font-size: 14px;
@@ -52,6 +67,7 @@ select {
   width: 30%;
   margin: 5px;
   display: inline-block;
+  background-color: whitesmoke;
 }
 
 #scoreDiv {
@@ -61,7 +77,8 @@ select {
   border: 1px solid black;
   margin: 5px;
   width: 10%;
-  display: inline-block;
+  background-color: whitesmoke;
+  
 }
 
 .color-bar {
