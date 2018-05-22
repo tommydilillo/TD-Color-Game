@@ -1,3 +1,13 @@
+nav {
+  background-color: lightskyblue;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  border-bottom: 1px solid silver;
+  width: 100%;
+  padding: 10px 0;
+}
+
 body {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
@@ -10,49 +20,46 @@ canvas {
   display: block;
 }
 
+.flex-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.color-bar {
+  width: 40px;
+  height: 20px;
+  display: inline-block;
+  /* padding: 0px 1%; */
+}
+
 .container {
   border: 1px solid indigo;
   background-color: lightgoldenrodyellow;
   padding: 0;
   margin: auto;
   width: 720px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-nav {
-  background-color: lightskyblue;
-  text-align: left;
-  font-size: 40px;
-  color: white;
-  border-bottom: 1px solid silver;
-  width: 100%;
-  padding: 10px 20px;
-}
-
-.flex-container {
-  flex-direction: row;
-}
-.flex-item {
-  border: 1px solid black;
-  list-style: none;
-  width: 30%;
-}
 button {
-  padding: 20px 30px;
+  padding: 15px 30px;
   font-size: 20px;
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
-  float: right;
-  margin: 5px 30px;
+  /* float: right; */
+  margin: 5px 10px;
 }
 
 .color-select {
-  float: right;
+  /* float: right; */
   padding: 5px;
+  font-size: 14px;
 }
 select {
   padding: 8px 20px;
-  font-size: 14px;
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
@@ -78,12 +85,5 @@ select {
   margin: 5px;
   width: 10%;
   background-color: whitesmoke;
-  
-}
-
-.color-bar {
-  flex-wrap: nowrap;
-  width: 10px;
-  height: 20px;
   display: inline-block;
 }
