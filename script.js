@@ -12,6 +12,7 @@ window.onload = function() {
   var currentGame;
   var currentPlayer;
   var score = 0;
+  var successSound;
 
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
@@ -21,16 +22,16 @@ window.onload = function() {
   var ctx = canvas.getContext("2d");
 
   //defining colors
-  var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-  var randomColor = color[Math.floor(Math.random() * color.length)];
-  var playerColor = "green";
-  var obstacleColor = color.splice(playerColor);
-  console.log(
-    "player color: ",
-    playerColor,
-    "obstacle color array:",
-    obstacleColor
-  );
+  // var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+  // var randomColor = color[Math.floor(Math.random() * color.length)];
+  // var playerColor = "green";
+  // var obstacleColor = color.splice(playerColor);
+  // console.log(
+  //   "player color: ",
+  //   playerColor,
+  //   "obstacle color array:",
+  //   obstacleColor
+  // );
 
   // game constructor function
   function Game() {
@@ -46,11 +47,15 @@ window.onload = function() {
       virtualPlayerY: 2000
     };
     // change the number to increase # of obstacles pushed into array
-    for (var i = 0; i < 100; i++) {
-      currentObstacle = new Obstacle(
-        this.virtualCanvas.width,
-        this.virtualCanvas.height
-      );
+    for (var i = 0; i < 10; i++) {
+      currentObstacle = new Obstacle(this, playerColor);
+      console.log(currentObstacle.color);
+      this.obstacles.push(currentObstacle);
+      // limiting the number of obstacles with the player color to 10.
+    }
+    for (var i = 0; i < 90; i++) {
+      currentObstacle = new Obstacle(this);
+      console.log(currentObstacle.color);
       this.obstacles.push(currentObstacle);
       // limiting the number of obstacles with the player color to 10.
     }
@@ -63,6 +68,22 @@ window.onload = function() {
   Game.prototype.startGame = function() {
     return null;
   };
+
+  function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function() {
+      this.sound.play();
+    };
+    this.stop = function() {
+      this.sound.pause();
+    };
+  }
 
   // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
@@ -212,12 +233,12 @@ window.onload = function() {
     ctx.fillText("p1", this.x, this.y); //not working
   };
 
-  var Obstacle = function(canvasWidth, canvasHeight) {
+  var Obstacle = function(game, color) {
     //canvasWidth and canvasHeight  take virtualCanvas.width and virtualCanvas.height
-    this.x = Math.floor(Math.random() * canvasWidth);
-    this.y = Math.floor(Math.random() * canvasHeight);
+    this.x = Math.floor(Math.random() * game.virtualCanvas.width);
+    this.y = Math.floor(Math.random() * game.virtualCanvas.height);
     this.r = 30 + Math.floor(Math.random() * 50);
-    let color = [
+    let colors = [
       "red",
       "orange",
       "yellow",
@@ -226,7 +247,12 @@ window.onload = function() {
       "indigo",
       "violet"
     ];
-    let randomColor = color[Math.floor(Math.random() * color.length)];
+    // if color is not defined as a parameter (which will not when creating random
+    //colors), splice out the PlayerColor (they are created seperately).
+    if (!color) colors.splice(color, 1);
+    const randomColor = color
+      ? color
+      : colors[Math.floor(Math.random() * colors.length)];
     this.color = randomColor;
     //define a random x and y value to add to obstacle when they are created
     this.xMovement = Math.floor(Math.random() * 10) - 5;
@@ -277,6 +303,13 @@ window.onload = function() {
     );
   };
 
+  // function matchingColor() {
+  //   for (var i = 0; i < currentGame.obstacles.length; i++) {
+  //     if currentGame.obstacles[i].color = playerColor {}
+
+  //     }
+  //   }
+
   function startGame() {
     console.log("start-game works");
     document.getElementById("scoreDiv").style.display = "block";
@@ -284,6 +317,7 @@ window.onload = function() {
     currentPlayer = new Player();
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
+    successSound = new sound("/sound/success.wav");
 
     console.log("OBSTACLES ", currentGame.obstacles);
     console.log("OBSTACLES ", currentGame.obstacles.color === playerColor);
@@ -303,7 +337,6 @@ window.onload = function() {
 
     //loop for all obstacles
 
-    var samecolor = [];
     for (var i = 0; i < currentGame.obstacles.length; i++) {
       //CHECK COLLISSIONS
 
@@ -315,6 +348,7 @@ window.onload = function() {
         currentGame.obstacles.splice(i, 1);
         score++;
         document.getElementById("score").innerHTML = score;
+        successSound.play();
 
         console.log("score:", score);
       }
@@ -351,6 +385,14 @@ window.onload = function() {
       }
 
       currentGame.obstacles[i].drawObstacle(currentGame.virtualCanvas);
+
+      //level up
+      if (score === 10) {
+        // setTimeout(function() {
+        //   alert("you beat the level");
+        // }, 5);
+        consoloe.log("you bear the level");
+      }
     }
   };
 };
