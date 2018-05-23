@@ -1,6 +1,8 @@
 window.onload = function() {
   // make score not visible before the game starts
   document.getElementById("scoreDiv").style.display = "none";
+  document.getElementById("loser").style.display = "none";
+  document.getElementById("level-complete").style.display = "none";
 
   document.getElementById("start-button").onclick = function() {
     playerColor = document.getElementById("player-color").value;
@@ -356,9 +358,12 @@ window.onload = function() {
       //
       if (currentGame.obstacles[i].checkCollision() === true) {
         console.log("collision detected");
-        // setTimeout(function() {
-        //   alert("wrong color! you lose");
-        // }, 5);
+        document.getElementById("loser").style.display = "block";
+
+        setTimeout(function() {
+          document.getElementById("loser").style.display = "block";
+          currentGame.obstacles = [];
+        }, 5);
       }
       if (currentGame.obstacles[i].right > 950)
         console.log(currentGame.obstacles[i].right);
@@ -388,9 +393,10 @@ window.onload = function() {
 
       //level up
       if (score === 10) {
-        // setTimeout(function() {
-        //   alert("you beat the level");
-        // }, 5);
+        setTimeout(function() {
+          document.getElementById("level-complete").style.display = "block";
+        }, 5);
+
         consoloe.log("you bear the level");
       }
     }

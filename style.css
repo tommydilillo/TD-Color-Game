@@ -57,6 +57,7 @@ button {
   /* float: right; */
   padding: 5px;
   font-size: 14px;
+  font-size: 16px
 }
 select {
   padding: 8px 20px;
@@ -68,7 +69,7 @@ select {
 
 .quest {
   padding: 8px 20px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 3px;
   border: 1px solid black;
   width: 30%;
@@ -79,11 +80,49 @@ select {
 
 #scoreDiv {
   padding: 8px 20px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 3px;
   border: 1px solid black;
   margin: 5px;
   width: 10%;
   background-color: whitesmoke;
   display: inline-block;
+  text-align: center
+}
+#score {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#loser {
+  padding: 40px 0 0 0;
+  font-size: 5vh;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  border: 5px solid black;
+  width: 40%;
+  height: 40%;
+  margin: 10px 30%;
+  background-color: lightsalmon;
+  z-index: 1;
+  position: absolute;
+}
+
+#level-complete {
+  padding: 40px 0 0 0;
+  font-size: 5vh;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  border: 5px solid white;
+  width: 40%;
+  height: 40%;
+  margin: 10px 30%;
+  background-color: lightskyblue;
+  z-index: 1;
+  position: absolute;
+}
 }
