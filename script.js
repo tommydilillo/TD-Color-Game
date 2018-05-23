@@ -237,8 +237,26 @@ window.onload = function() {
 
   var Obstacle = function(game, color) {
     //canvasWidth and canvasHeight  take virtualCanvas.width and virtualCanvas.height
-    this.x = Math.floor(Math.random() * game.virtualCanvas.width);
-    this.y = Math.floor(Math.random() * game.virtualCanvas.height);
+    let randomX = Math.floor(Math.random() * game.virtualCanvas.width),
+      randomY = Math.floor(Math.random() * game.virtualCanvas.height);
+    console.log("WIDTH ", game.virtualCanvas.width);
+    console.log("HEIGHT ", game.virtualCanvas.height);
+    while (
+      randomX < game.virtualCanvas.width / 2 + 200 &&
+      randomX > game.virtualCanvas.width / 2 - 200
+    ) {
+      randomX = Math.floor(Math.random() * game.virtualCanvas.width);
+    }
+
+    while (
+      randomY < game.virtualCanvas.height / 2 + 200 &&
+      randomY > game.virtualCanvas.height / 2 - 200
+    ) {
+      randomY = Math.floor(Math.random() * game.virtualCanvas.height);
+    }
+
+    this.x = randomX;
+    this.y = randomY;
     this.r = 30 + Math.floor(Math.random() * 50);
     let colors = [
       "red",
@@ -249,7 +267,7 @@ window.onload = function() {
       "indigo",
       "violet"
     ];
-    // if color is not defined as a parameter (which will not when creating random
+    // if color is not defined as a parameter (occurs when creating random
     //colors), splice out the PlayerColor (they are created seperately).
     if (!color) colors.splice(color, 1);
     const randomColor = color

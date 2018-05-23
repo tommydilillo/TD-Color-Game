@@ -57,7 +57,7 @@ button {
   /* float: right; */
   padding: 5px;
   font-size: 14px;
-  font-size: 16px
+  font-size: 16px;
 }
 select {
   padding: 8px 20px;
@@ -87,7 +87,7 @@ select {
   width: 10%;
   background-color: whitesmoke;
   display: inline-block;
-  text-align: center
+  text-align: center;
 }
 #score {
   font-size: 30px;
@@ -124,5 +124,4 @@ select {
   background-color: lightskyblue;
   z-index: 1;
   position: absolute;
-}
 }
