@@ -424,7 +424,7 @@ window.onload = function() {
           levelCompleteMusic.play();
         }, 5);
 
-        consoloe.log("you beat the level");
+        console.log("you beat the level");
       }
     }
   };
