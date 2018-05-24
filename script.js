@@ -16,7 +16,9 @@ window.onload = function() {
   var currentPlayer;
   var score = 0;
   // var successSound;
-  var backgroundMusic = document.querySelector("audio");
+  var backgroundMusic = document.getElementById("background-music");
+  var loseMusic = document.getElementById("lose-music");
+  var levelCompleteMusic = document.getElementById("level-complete-music");
 
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
@@ -370,7 +372,7 @@ window.onload = function() {
         currentGame.obstacles.splice(i, 1);
         score++;
         document.getElementById("score").innerHTML = score;
-        successSound.play();
+        // successSound.play();
 
         console.log("score:", score);
       }
@@ -383,6 +385,8 @@ window.onload = function() {
         setTimeout(function() {
           document.getElementById("loser").style.display = "block";
           currentGame.obstacles = [];
+          backgroundMusic.pause();
+          loseMusic.play();
         }, 5);
       }
       if (currentGame.obstacles[i].right > 950)
@@ -412,12 +416,15 @@ window.onload = function() {
       currentGame.obstacles[i].drawObstacle(currentGame.virtualCanvas);
 
       //level up
-      if (score === 10) {
+      if (score === 1) {
         setTimeout(function() {
           document.getElementById("level-complete").style.display = "block";
+          currentGame.obstacles = [];
+          backgroundMusic.pause();
+          levelCompleteMusic.play();
         }, 5);
 
-        consoloe.log("you bear the level");
+        consoloe.log("you beat the level");
       }
     }
   };

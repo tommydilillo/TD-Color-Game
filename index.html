@@ -119,21 +119,34 @@
 
     <div id="loser">
         Oh no, you lost! Valiant effort nonetheless!
+        <br>
+        <br>Reload to play again.
+
 
     </div>
 
     <div id="level-complete">
-        Congrats, you've completed the level. What a hero! </div>
+        Congrats, you've completed the level. What a hero!
+        <br>
+        <br>Reload to play again.
+    </div>
     <div>
         <canvas id="canvas" width="720 " height="400"></canvas>
     </div>
 
 
 
-    <audio>
+    <audio id="background-music">
         <source src="sound/BrazilianFlower.m4a" type="audio/mpeg">
     </audio>
 
+    <audio id="lose-music">
+        <source src="sound/Lose.m4a" type="audio/mpeg">
+    </audio>
+
+    <audio id="level-complete-music">
+        <source src="sound/levelComplete.m4a" type="audio/mpeg">
+    </audio>
 
 
 
