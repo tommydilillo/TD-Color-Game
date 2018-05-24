@@ -51,13 +51,17 @@ button {
   text-align: center;
   /* float: right; */
   margin: 5px 10px;
+  width: 20%;
 }
 
-.color-select {
+.functions {
   /* float: right; */
-  padding: 5px;
+  padding: 10px 5px;
   font-size: 14px;
-  font-size: 16px;
+}
+
+#color-select #matching-color #number-of-obstacles {
+  padding: 10px 0px;
 }
 select {
   padding: 8px 20px;
@@ -65,6 +69,10 @@ select {
   font-weight: bold;
   text-align: center;
   display: inline-block;
+}
+input {
+  width: 40px;
+  border-radius: 1px;
 }
 
 .quest {

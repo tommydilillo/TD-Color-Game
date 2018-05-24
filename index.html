@@ -89,23 +89,31 @@
         <div class="quest ">
             <span>Your Quest:</span> Capture all the circles of the same Color.
             <br>
-            <em>Hint: there are 10 of them.</em>
         </div>
 
         <button id="start-button">Start Game</button>
 
-        <div class="color-select">
-            <label>Choose your Color:</label>
-            <select id="player-color">
-                <option value="red">Red</option>
-                <option value="orange">Orange</option>
-                <option value="yellow">Yellow</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-                <option value="indigo">Indigo</option>
-                <option value="violet">Violet</option>
-            </select>
-            <div id="color-clock"></div>
+        <div class="functions">
+            <div class="color-select">
+                <label>Choose Color:</label>
+                <select id="player-color">
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="indigo">Indigo</option>
+                    <option value="violet">Violet</option>
+                </select>
+            </div>
+            <div>
+                <label>Circles to find:</label>
+                <input id="matching-color" type="number" value="10" min="1" max="100">
+            </div>
+            <div>
+                <label>Obstacles:</label>
+                <input id="number-of-obstacles" type="number" value="200" min="10" max="1000">
+            </div>
         </div>
 
 

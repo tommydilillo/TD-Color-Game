@@ -6,6 +6,9 @@ window.onload = function() {
 
   document.getElementById("start-button").onclick = function() {
     playerColor = document.getElementById("player-color").value;
+    matchingColor = document.getElementById("matching-color").value;
+    numberOfObstacles = document.getElementById("number-of-obstacles").value;
+
     startGame();
     interval();
     backgroundMusic.play();
@@ -15,29 +18,15 @@ window.onload = function() {
   var currentGame;
   var currentPlayer;
   var score = 0;
-  // var successSound;
   var backgroundMusic = document.getElementById("background-music");
   var loseMusic = document.getElementById("lose-music");
   var levelCompleteMusic = document.getElementById("level-complete-music");
-
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
   }
 
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-
-  //defining colors
-  // var color = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-  // var randomColor = color[Math.floor(Math.random() * color.length)];
-  // var playerColor = "green";
-  // var obstacleColor = color.splice(playerColor);
-  // console.log(
-  //   "player color: ",
-  //   playerColor,
-  //   "obstacle color array:",
-  //   obstacleColor
-  // );
 
   // game constructor function
   function Game() {
@@ -53,13 +42,13 @@ window.onload = function() {
       virtualPlayerY: 2000
     };
     // change the number to increase # of obstacles pushed into array
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < matchingColor; i++) {
       currentObstacle = new Obstacle(this, playerColor);
       console.log(currentObstacle.color);
       this.obstacles.push(currentObstacle);
       // limiting the number of obstacles with the player color to 10.
     }
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < numberOfObstacles; i++) {
       currentObstacle = new Obstacle(this);
       console.log(currentObstacle.color);
       this.obstacles.push(currentObstacle);
@@ -327,13 +316,6 @@ window.onload = function() {
     );
   };
 
-  // function matchingColor() {
-  //   for (var i = 0; i < currentGame.obstacles.length; i++) {
-  //     if currentGame.obstacles[i].color = playerColor {}
-
-  //     }
-  //   }
-
   function startGame() {
     console.log("start-game works");
     document.getElementById("scoreDiv").style.display = "block";
@@ -358,6 +340,7 @@ window.onload = function() {
   Game.prototype.updateCanvas = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     currentGame.player.drawPlayer();
+    console.log("match: ", matchingColor);
 
     //loop for all obstacles
 
@@ -416,7 +399,7 @@ window.onload = function() {
       currentGame.obstacles[i].drawObstacle(currentGame.virtualCanvas);
 
       //level up
-      if (score === 1) {
+      if (score == matchingColor) {
         setTimeout(function() {
           document.getElementById("level-complete").style.display = "block";
           currentGame.obstacles = [];
