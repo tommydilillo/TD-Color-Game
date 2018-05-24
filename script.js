@@ -8,13 +8,15 @@ window.onload = function() {
     playerColor = document.getElementById("player-color").value;
     startGame();
     interval();
+    backgroundMusic.play();
   };
 
   //global variables
   var currentGame;
   var currentPlayer;
   var score = 0;
-  var successSound;
+  // var successSound;
+  var backgroundMusic = document.querySelector("audio");
 
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
@@ -55,7 +57,7 @@ window.onload = function() {
       this.obstacles.push(currentObstacle);
       // limiting the number of obstacles with the player color to 10.
     }
-    for (var i = 0; i < 90; i++) {
+    for (var i = 0; i < 200; i++) {
       currentObstacle = new Obstacle(this);
       console.log(currentObstacle.color);
       this.obstacles.push(currentObstacle);
@@ -71,21 +73,21 @@ window.onload = function() {
     return null;
   };
 
-  function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
+  // function sound(src) {
+  //   this.sound = document.createElement("audio");
+  //   this.sound.src = src;
 
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function() {
-      this.sound.play();
-    };
-    this.stop = function() {
-      this.sound.pause();
-    };
-  }
+  //   this.sound.setAttribute("preload", "auto");
+  //   this.sound.setAttribute("controls", "none");
+  //   this.sound.style.display = "none";
+  //   document.body.appendChild(this.sound);
+  //   this.play = function() {
+  //     this.sound.play();
+  //   };
+  //   this.stop = function() {
+  //     this.sound.pause();
+  //   };
+  // }
 
   // PLAYER MOVEMENT
   Game.prototype.movePlayer = function(clickedKey) {
@@ -337,7 +339,7 @@ window.onload = function() {
     currentPlayer = new Player();
     currentGame.player = currentPlayer;
     currentGame.player.drawPlayer();
-    successSound = new sound("/sound/success.wav");
+    // successSound = new sound("/sound/success.wav");
 
     console.log("OBSTACLES ", currentGame.obstacles);
     console.log("OBSTACLES ", currentGame.obstacles.color === playerColor);
