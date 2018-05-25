@@ -237,8 +237,8 @@ window.onload = function() {
     while (
       (randomX < game.virtualCanvas.width / 2 + 200 &&
         randomX > game.virtualCanvas.width / 2 - 200) ||
-      randomX < 50 ||
-      randomX > game.virtualCanvas.width - 50
+      randomX < 100 ||
+      randomX > game.virtualCanvas.width - 100
     ) {
       randomX = Math.floor(Math.random() * game.virtualCanvas.width);
     }
@@ -246,8 +246,8 @@ window.onload = function() {
     while (
       (randomY < game.virtualCanvas.height / 2 + 200 &&
         randomY > game.virtualCanvas.height / 2 - 200) ||
-      randomY < 50 ||
-      randomY > game.virtualCanvas.width - 50
+      randomY < 100 ||
+      randomY > game.virtualCanvas.width - 100
     ) {
       randomY = Math.floor(Math.random() * game.virtualCanvas.height);
     }
