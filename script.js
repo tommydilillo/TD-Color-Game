@@ -11,7 +11,7 @@ window.onload = function() {
 
     startGame();
     interval();
-    backgroundMusic.pause();
+    backgroundMusic.play();
   };
 
   //global variables
