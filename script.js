@@ -11,8 +11,7 @@ window.onload = function() {
 
     startGame();
     interval();
-    backgroundMusic.play();
-  };
+git   };
 
   //global variables
   var currentGame;
@@ -21,6 +20,8 @@ window.onload = function() {
   var backgroundMusic = document.getElementById("background-music");
   var loseMusic = document.getElementById("lose-music");
   var levelCompleteMusic = document.getElementById("level-complete-music");
+  var matchColorAudio = document.getElementById("match-color-audio");
+
   function interval() {
     setInterval(currentGame.updateCanvas, 50);
   }
@@ -358,6 +359,7 @@ window.onload = function() {
       ) {
         currentGame.obstacles.splice(i, 1);
         score++;
+        matchColorAudio.play();
         document.getElementById("score").innerHTML = score;
         // successSound.play();
 

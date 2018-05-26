@@ -54,6 +54,10 @@ button {
   width: 20%;
 }
 
+button:hover {
+  background-color: lightcyan;
+}
+
 .functions {
   /* float: right; */
   padding: 10px 5px;
