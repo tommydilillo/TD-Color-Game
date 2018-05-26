@@ -61,7 +61,7 @@ window.onload = function() {
   Game.prototype.drawGame = function() {
     this.player.drawPlayer();
   };
-
+//
   Game.prototype.startGame = function() {
     return null;
   };
