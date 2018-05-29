@@ -3,12 +3,14 @@
 // -- moving diagonally
 // -- move smoother
 // -- clean code, seperate randomize functions
+// create instructions -- how to move and how to lose.
 
 // -- create timer
 // -- create sound button
 // -- create loop for song
 // -- sound for crash/collission
 // -- sound for winning (trumpets)
+
 
 // ADD DIFFERENT QUESTS
 //      - create aside for other quests
@@ -19,6 +21,7 @@ window.onload = function() {
   document.getElementById("scoreDiv").style.display = "none";
   document.getElementById("loser").style.display = "none";
   document.getElementById("level-complete").style.display = "none";
+
 };
 
 //global variables
@@ -36,6 +39,7 @@ document.getElementById("start-button").onclick = function() {
   numberOfObstacles = document.getElementById("number-of-obstacles").value;
   document.getElementById("loser").style.display = "none";
   document.getElementById("level-complete").style.display = "none";
+  document.getElementById("instructions").style.display = "none";
   startGame();
   interval();
   backgroundMusic.play();
